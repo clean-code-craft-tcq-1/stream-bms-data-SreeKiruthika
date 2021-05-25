@@ -19,5 +19,4 @@ float tempOutputTest =	WriteFormatted("%f\n",temp);
 	
 }
 
-20.0;1.5
-32.5;
+
