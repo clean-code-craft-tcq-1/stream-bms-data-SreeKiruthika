@@ -9,7 +9,6 @@ void bmsDataToConsoleSender ()
   //tempValidated = validateTemperature(tempReceived);
 //	ChrgRateReceived = getBMSChrgRate();
 	//ChrgRateValidated = validateChrgRate (ChrgRateReceived);
-	printf("%f\n",tempReceived);
 	mock_console(tempReceived);
 	
 }

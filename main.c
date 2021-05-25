@@ -15,8 +15,12 @@ float tempInputTest = 0;
 float tempOutputTest = 0;
 int main()
 {
-    tempInputTest = 1.23;
+    float tempDatabase[]={54.0,37.5,65.9,58.1,99.50,100.3};
+    for(int i=0;i<6;i++)
+    {
+    tempInputTest = tempDatabase[i];
 	bmsDataToConsoleSender();
     assert((tempOutputTest-tempInputTest)<0.01);
+    }
     return 0;
 }
