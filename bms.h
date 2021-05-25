@@ -3,3 +3,4 @@
 
 void bmsDataToConsoleSender();
 float getBMSTemperatue();
+float getBMSChrgRate();

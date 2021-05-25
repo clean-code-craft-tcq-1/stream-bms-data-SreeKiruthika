@@ -1,7 +1,8 @@
 #include <stdio.h>
 
-float mock_database(float test);
-void mock_console(float temp);
+void printToConsole(float temp,float ChrgRate);
 
 extern float tempInputTest;
 extern float tempOutputTest;
+extern float ChrgRateInputTest;
+extern float ChrgRateOutputTest;
