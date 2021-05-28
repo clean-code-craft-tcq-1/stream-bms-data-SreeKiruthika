@@ -1,12 +1,17 @@
 #include <stdio.h>
 #include "test_mocks.h"
 
-#define CHRGRATE_MIN 0.0
-#define CHRGRATE_MAX 2.0
-#define TEMP_MIN     20.0
-#define TEMP_MAX     80.0
+enum BATTERYPARAM {TEMPERATURE, CHARGERATE, NUMOFPARAM};
 
+struct BatteryParam_s
+{
+    char ParamName[20];
+    float minValue;
+    float maxValue;
+};
 
-void bmsDataToConsoleSender();
+typedef float (*getParamValue_funcPtr)();
+void BMSDataToConsoleSender();
 float getBMSTemperatue();
-float getBMSChrgRate();
+float getBMSChargeRate();
+void printToConsole(float * BMSDataArray , int arraySize);

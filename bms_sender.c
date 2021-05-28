@@ -1,53 +1,39 @@
 #include "bms.h"
 
 
-void bmsDataToConsoleSender()
+struct BatteryParam_s BatteryParam[NUMOFPARAM] = {{"Temperature", TEMP_MIN , TEMP_MAX},
+                                                  {"ChargeRate", CHRGRATE_MIN , CHRGRATE_MIN}};
+
+getParamValue_funcPtr getParamValue[NUMOFPARAM] = {getBMSTemperatue , getBMSChargeRate};
+
+
+void BMSDataToConsoleSender()
 {
-	float tempReceived, tempValidated;
-	float ChrgRateReceived, ChrgRateValidated ;
-    printf("Temperature;Chargerate\n");
-    
+	float BMSParamValue[NUMOFPARAM];
+    int EoFDetected = 0 ; 
+	char seperator;
+	
+	for (int i=0; i < NUMOFPARAM; i++)
+	{
+	    printf("%s",BatteryParam[i].ParamName);
+	    seperator = (i == (NUMOFPARAM-1)) ? '\n':';';
+	    printf("%c",seperator);
+	}
+ 
 	do
 	{
-		tempReceived = getBMSTemperatue();
-     	ChrgRateReceived = getBMSChrgRate();
-	    printToConsole(tempReceived,ChrgRateReceived);
+	    for (int i=0 ; i < NUMOFPARAM; i++)
+	    {
+	        BMSParamValue[i]= getParamValue[i]();
+	        if (BMSParamValue[i] == EOF)
+	        {
+	            EoFDetected = 1;
+	        }
+	    }
+		
+	    printToConsole(BMSParamValue,NUMOFPARAM);
 	    
-	}while((tempReceived != EOF)&&(ChrgRateReceived != EOF));
+	}while(EoFDetected == 0);
 
 }
 
-float getBMSTemperatue()
-{
-	static int i=0;
-	if (i >= MAX_PRINT)
-	{
-		tempInputTest = EOF;
-	}
-	else
-	{
-	  tempInputTest = RandomFloatGeneratorWithinRange(TEMP_MIN, TEMP_MAX);
-	}
-	
-	i++;
-   
-    return tempInputTest;
-}
-
-float getBMSChrgRate()
-{
-	static int i=0;
-   
-    if (i >= MAX_PRINT)
-	{
-		ChrgRateInputTest = EOF;
-	}
-	else
-	{
-	     ChrgRateInputTest = RandomFloatGeneratorWithinRange(CHRGRATE_MIN, CHRGRATE_MAX) ;
-	}
-	
-	i++;
-	
-    return ChrgRateInputTest;
-}
