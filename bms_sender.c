@@ -1,12 +1,19 @@
 #include "bms.h"
 
+/* Structure initialisation of battery parameters */
 
 struct BatteryParam_s BatteryParam[NUMOFPARAM] = {{"Temperature", TEMP_MIN , TEMP_MAX},
                                                   {"ChargeRate", CHRGRATE_MIN , CHRGRATE_MIN}};
 
+/* Function pointer initialisation with functions to get battery parameters */
+
 getParamValue_funcPtr getParamValue[NUMOFPARAM] = {getBMSTemperatue , getBMSChargeRate};
 
-
+/****************************************************************************************
+*Func desc : This function is to collect BMS data and print to console 
+*Param     : None
+*Return    : None
+*****************************************************************************************/
 void BMSDataToConsoleSender()
 {
 	float BMSParamValue[NUMOFPARAM];
@@ -31,7 +38,7 @@ void BMSDataToConsoleSender()
 	        }
 	    }
 		
-	    printToConsole(BMSParamValue,NUMOFPARAM);
+	    printToConsole(BMSParamValue, NUMOFPARAM );
 	    
 	}while(EoFDetected == 0);
 

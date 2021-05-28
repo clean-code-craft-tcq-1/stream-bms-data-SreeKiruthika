@@ -1,5 +1,11 @@
 #include "bms.h"
 
+/****************************************************************************************
+*Func desc : This function is to print the passed BMS data to console - stubbed
+*Param     : BMSDataArray - Float array pointer which holds the BMS data
+			 arraySize    - Size of array passed
+*Return    : None
+*****************************************************************************************/
 void printToConsole(float * BMSDataArray , int arraySize)
 {
 
@@ -8,6 +14,11 @@ void printToConsole(float * BMSDataArray , int arraySize)
    validatePrintedOutput();	
 }
 
+/****************************************************************************************
+*Func desc : This function is to fetch the BMS temperature value (can be from file or database) - Faked
+*Param     : None
+*Return    : Returns Temperature value - Float type
+*****************************************************************************************/
 
 float getBMSTemperatue()
 {
@@ -25,6 +36,12 @@ float getBMSTemperatue()
    
     return TemperatureInputTest;
 }
+
+/****************************************************************************************
+*Func desc : This function is to fetch the BMS charge rate value (can be from file or database) - Faked
+*Param     : None
+*Return    : Returns Temperature value - Float type
+*****************************************************************************************/
 
 float getBMSChargeRate()
 {
