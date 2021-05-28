@@ -7,7 +7,7 @@ Write your code in this editor and press "Run" button to compile and execute it.
 *******************************************************************************/
 
 #include <stdio.h>
-#include <assert.h>
+
 #include "test_mocks.h"
 #include "bms.h"
 
@@ -15,17 +15,31 @@ float tempInputTest = 0;
 float tempOutputTest = 0;
 float ChrgRateInputTest = 0;
 float ChrgRateOutputTest = 0;
+int MAX_PRINT = 15;
+
+void TC_Print_5()
+{
+    MAX_PRINT = 5;
+    bmsDataToConsoleSender();
+}
+
+void TC_Print_15()
+{
+    MAX_PRINT = 15;
+    bmsDataToConsoleSender();
+}
+
+void TC_Print_0()
+{
+    MAX_PRINT = 0;
+    bmsDataToConsoleSender();
+}
+
 int main()
 {
-    float tempDatabase[]={54.0,37.5,65.9,58.1,99.50,100.3};
-    float ChrgRateDatabase[]={1.5,1.6,1.9,1.2,1.66,1.8};
-    for(int i=0;i<6;i++)
-    {
-    tempInputTest = tempDatabase[i];
-    ChrgRateInputTest = ChrgRateDatabase[i];
-	bmsDataToConsoleSender();
-    assert((tempOutputTest-tempInputTest)<0.01);
-    assert((ChrgRateOutputTest-ChrgRateInputTest)<0.01);
-    }
+    TC_Print_5();
+    TC_Print_15();
+    TC_Print_0(); /*Null array*/
     return 0;
 }
+

@@ -1,23 +1,53 @@
 #include "bms.h"
-#include "test_mocks.h"
+
 
 void bmsDataToConsoleSender()
 {
-	float tempReceived;
+	float tempReceived, tempValidated;
 	float ChrgRateReceived, ChrgRateValidated ;
-	tempReceived = getBMSTemperatue();
- 	ChrgRateReceived = getBMSChrgRate();
-	printToConsole(tempReceived,ChrgRateReceived);
-	
+    printf("Temperature;Chargerate\n");
+    
+	do
+	{
+		tempReceived = getBMSTemperatue();
+     	ChrgRateReceived = getBMSChrgRate();
+	    printToConsole(tempReceived,ChrgRateReceived);
+	    
+	}while((tempReceived != EOF)&&(ChrgRateReceived != EOF));
+
 }
+
 float getBMSTemperatue()
 {
-    float retval = tempInputTest;
-    return retval;
+	static int i=0;
+	if (i >= MAX_PRINT)
+	{
+		tempInputTest = EOF;
+	}
+	else
+	{
+	  tempInputTest = RandomFloatGeneratorWithinRange(TEMP_MIN, TEMP_MAX);
+	}
+	
+	i++;
+   
+    return tempInputTest;
 }
 
 float getBMSChrgRate()
 {
-    float retval = ChrgRateInputTest;
-    return retval;
+	static int i=0;
+   
+    if (i >= MAX_PRINT)
+	{
+		ChrgRateInputTest = EOF;
+	}
+	else
+	{
+	     ChrgRateInputTest = RandomFloatGeneratorWithinRange(CHRGRATE_MIN, CHRGRATE_MAX) ;
+	}
+	
+	i++;
+	
+    return ChrgRateInputTest;
 }
