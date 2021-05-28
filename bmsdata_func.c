@@ -4,10 +4,12 @@
 *Func desc : This function is to print the passed BMS data to console - stubbed
 *Param     : BMSDataArray - Float array pointer which holds the BMS data
 			 arraySize    - Size of array passed
+			 SenderPrintFormat - Format in which passed data is to be printed
 *Return    : None
 *****************************************************************************************/
-void printToConsole(float * BMSDataArray , int arraySize)
+void printToConsole(float * BMSDataArray , int arraySize, enum PRINTFORMAT SenderPrintFormat)
 {
+	/*realised for only csv format of 2 inputs, code generalisation not realised as it mock*/
 
    WriteFormatted("%0.2f;%0.2f\n", BMSDataArray[0], BMSDataArray[1]);
 

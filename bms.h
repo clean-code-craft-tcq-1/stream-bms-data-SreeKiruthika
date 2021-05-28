@@ -17,6 +17,10 @@
 /***************GLOBAL variables section **********************/
 enum BATTERYPARAM {TEMPERATURE, CHARGERATE, NUMOFPARAM};
 
+enum PRINTFORMAT {CSV};
+
+extern enum PRINTFORMAT SenderPrintFormat ;
+
 struct BatteryParam_s
 {
     char ParamName[20];
@@ -35,5 +39,5 @@ float getBMSTemperatue();  /*Function to get BMS temperature database value - Fa
 
 float getBMSChargeRate();  /*Function to get BMS charge rate database value - Fake */
 
-void printToConsole(float * BMSDataArray , int arraySize); /*Function to print the data to console - Mocked */
+void printToConsole(float * BMSDataArray , int arraySize, enum PRINTFORMAT SenderPrintFormat); /*Function to print the data to console - Mocked */
 /************************************************************/
