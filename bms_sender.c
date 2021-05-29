@@ -44,6 +44,8 @@ void BMSDataToConsoleSender()
 	    }
 		
 	    printToConsole(BMSParamValue, NUMOFPARAM , SenderPrintFormat);
+	
+	    delay(SENDER_DELAY_MS);
 	    
 	}while(EoFDetected == 0);
 
