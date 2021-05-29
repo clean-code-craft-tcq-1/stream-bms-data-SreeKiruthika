@@ -21,7 +21,7 @@ void BMSDataToConsoleSender()
     int EoFDetected = 0 ; 
 	char seperator;
 	
-	if( SenderPrintFormat == CSV) /*Needed only fo CSV format as the param names are typed before data
+	if( SenderPrintFormat == CSV) /*Needed only for CSV format as the param names are typed before data
 									In other formats it is typed along with data say JSON*/
 	{
 	   for (int i=0; i < NUMOFPARAM; i++)
@@ -34,18 +34,23 @@ void BMSDataToConsoleSender()
  
 	do
 	{
+	    EoFDetected = 0;
+	    
 	    for (int i=0 ; i < NUMOFPARAM; i++)
 	    {
 	        BMSParamValue[i]= getParamValue[i]();
+	        
 	        if (BMSParamValue[i] == EOF)
 	        {
-	            EoFDetected = 1;
+	            EoFDetected ++ ;
 	        }
 	    }
 		
 	    printToConsole(BMSParamValue, NUMOFPARAM , SenderPrintFormat);
+	
+	    sleep(SENDER_DELAY_SEC);
 	    
-	}while(EoFDetected == 0);
+	}while(!(EoFDetected == NUMOFPARAM));
 
 }
 

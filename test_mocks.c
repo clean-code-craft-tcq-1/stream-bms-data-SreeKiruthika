@@ -11,42 +11,31 @@ void WriteFormatted ( const char * format, ... )
  
   va_start (args, format);
   vprintf (format, args);
-  TemperatureOutputTest = va_arg(args, double);
-  ChargeRateOutputTest = va_arg(args, double);
+  TestOutputValue[TEMPERATURE] = va_arg(args, double);
+  TestOutputValue[CHARGERATE]  = va_arg(args, double);
   va_end (args);
 }
 
 
-
-/****************************************************************************************
-*Func desc : This function to generate a random float number within the limits passed
-*Param     : min - the minimum value limitation for generated  random number - float type      
-			 max - the maximum value limitation for generated  random number - float type 
-*Return    : Returns the status of value breach - enum BreachType
-*****************************************************************************************/
-float RandomFloatGeneratorWithinRange(float min, float max)
-{
-   return ((max - min) * ((float)rand() / RAND_MAX)) + min;
-}
-
-
-
 /****************************************************************************************
 *Func desc : This is test function to validate the each printed output value against the database input value 
+			 Each paramater input and output value is verified for each printing
 			 To be called after printing is done using mocked "WriteFormatted" where the printed values are updated to output value
 *Param     : None
 *Return    : None
 *****************************************************************************************/
 void validatePrintedOutput()
 {
-  if((TemperatureInputTest == EOF) || (ChargeRateInputTest == EOF))
-  {
-     assert((int)TemperatureOutputTest  == 0);
-     assert((int)ChargeRateOutputTest == 0);
-  }
-  else
-  {
-     assert((TemperatureOutputTest - TemperatureInputTest) <0.01);
-     assert((ChargeRateOutputTest - ChargeRateInputTest) <0.01);
-  }
+	for (int i=0 ; i < NUMOFPARAM ; i++)
+	{
+		if (TestInputValue[i] == EOF ) 
+		{
+			assert((int)TestOutputValue[i]  == 0);
+		}
+		else
+		{
+			assert((TestOutputValue[i] - TestInputValue[i]) <0.01);
+			TestPrintCount[i]++;
+		}
+	}
 }
