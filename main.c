@@ -26,11 +26,11 @@ void ResetPrintCount()
 void TC_AssignMaxPrint(int Temp,int ChargeRate)
 {
     MAX_PRINT[TEMPERATURE] = Temp;
-	MAX_PRINT[CHARGERATE] = ChargeRate;
-	ResetPrintCount(); /*to reset print count between the test cases*/
+    MAX_PRINT[CHARGERATE] = ChargeRate;
+    ResetPrintCount(); /*to reset print count between the test cases*/
     BMSDataToConsoleSender();
-    TestPrintCount[TEMPERATURE] = Temp;
-    TestPrintCount[CHARGERATE] = ChargeRate;
+    assert(TestPrintCount[TEMPERATURE] == Temp);
+    assert(TestPrintCount[CHARGERATE] == ChargeRate);
  //   printf("\n%d,%d",TestPrintCount[TEMPERATURE],TestPrintCount[CHARGERATE]); for debugging
      /*validatePrintedOutput() does validations parallely on each printed output*/
 }
