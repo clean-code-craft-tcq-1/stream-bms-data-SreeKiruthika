@@ -1,4 +1,4 @@
-#include "bms.h"
+#include "test_mocks.h"
 
 /****************************************************************************************
 *Func desc : This function is to print the passed BMS data to console - stubbed
@@ -24,19 +24,18 @@ void printToConsole(float * BMSDataArray , int arraySize, enum PRINTFORMAT Sende
 
 float getBMSTemperatue()
 {
-	static int i=0;
-	if (i >= MAX_PRINT)
+    /*This condition can be replaced by user stop command too, realised for test purpose */
+	if (TestPrintCount[TEMPERATURE] >= MAX_PRINT[TEMPERATURE]) 
 	{
-		TemperatureInputTest = EOF;
+		TestInputValue[TEMPERATURE]  = EOF;
 	}
 	else
 	{
-	    TemperatureInputTest = RandomFloatGeneratorWithinRange(TEMP_MIN, TEMP_MAX);
+	    TestInputValue[TEMPERATURE]  = RandomFloatGeneratorWithinRange(TEMP_MIN, TEMP_MAX);
 	}
 	
-	i++;
    
-    return TemperatureInputTest;
+    return TestInputValue[TEMPERATURE] ;
 }
 
 /****************************************************************************************
@@ -45,20 +44,19 @@ float getBMSTemperatue()
 *Return    : Returns Temperature value - Float type
 *****************************************************************************************/
 
+/*Though it is similar to getBMSTemperatue(), realised seperately to make parameter sources independent*/
+
 float getBMSChargeRate()
 {
-	static int i=0;
-   
-    if (i >= MAX_PRINT)
+
+    if (TestPrintCount[CHARGERATE] >= MAX_PRINT[CHARGERATE])
 	{
-		ChargeRateInputTest = EOF;
+		TestInputValue[CHARGERATE] = EOF;
 	}
 	else
 	{
-	    ChargeRateInputTest = RandomFloatGeneratorWithinRange(CHRGRATE_MIN, CHRGRATE_MAX) ;
+	    TestInputValue[CHARGERATE]  = RandomFloatGeneratorWithinRange(CHRGRATE_MIN, CHRGRATE_MAX) ;
 	}
 	
-	i++;
-	
-    return ChargeRateInputTest;
+    return TestInputValue[CHARGERATE] ;
 }

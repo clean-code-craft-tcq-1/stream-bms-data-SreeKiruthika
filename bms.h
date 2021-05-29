@@ -9,13 +9,17 @@
 #else
 #include <unistd.h>
 #endif
-#include "test_mocks.h"
 /************************************************************/
 
 
 /***************DEFINES section *****************************/
 
 #define SENDER_DELAY_SEC 0
+
+#define CHRGRATE_MIN 0.0
+#define CHRGRATE_MAX 2.0
+#define TEMP_MIN     20.0
+#define TEMP_MAX     80.0
 
 /**************************************************************/
 
