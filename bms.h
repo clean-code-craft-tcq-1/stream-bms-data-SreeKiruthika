@@ -4,14 +4,18 @@
 
 /******************** INCLUDE SECTION ***********************/
 #include <stdio.h>
-#include <dos.h>
+#ifdef _WIN32
+#include <Windows.h>
+#else
+#include <unistd.h>
+#endif
 #include "test_mocks.h"
 /************************************************************/
 
 
 /***************DEFINES section *****************************/
 
-#define SENDER_DELAY_MS 0
+#define SENDER_DELAY_SEC 0
 
 /**************************************************************/
 
