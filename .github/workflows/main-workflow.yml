@@ -14,7 +14,7 @@ jobs:
       run: sudo apt-get install -y gcovr
 
     - name: build for test
-      run: g++ -DUNIT_TEST -Wall -Wextra -fprofile-arcs -ftest-coverage -o testchecker ./BMS/Test_Sender/test_main.c ./BMS/bms_sender.c ./BMS/bmsdata_func_fake.c ./BMS/test_mocks.c
+      run: g++ -DUNIT_TEST -Wall -Wextra -fprofile-arcs -ftest-coverage -o testchecker ./BMS/test_main.c ./BMS/bms_sender.c ./BMS/bmsdata_func_fake.c ./BMS/test_mocks.c
       
     - name: run
       run: ./testchecker
