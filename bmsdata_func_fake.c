@@ -1,5 +1,5 @@
-#include "bms.h"
-#include <stdbool.h>
+#include "test_mocks.h"
+
 /****************************************************************************************
 *Func desc : This function is to print the passed BMS data to console - stubbed
 *Param     : BMSDataArray - Float array pointer which holds the BMS data
@@ -11,8 +11,9 @@ void printToConsole(float * BMSDataArray , int arraySize, enum PRINTFORMAT Sende
 {
 	/*realised for only csv format of 2 inputs, code generalisation not realised as it mock*/
 
-  printf("%0.2f;%0.2f\n", BMSDataArray[0], BMSDataArray[1]);
+   WriteFormatted("%0.2f;%0.2f\n", BMSDataArray[0], BMSDataArray[1]);
 
+   validatePrintedOutput();	
 }
 
 /****************************************************************************************
@@ -23,17 +24,18 @@ void printToConsole(float * BMSDataArray , int arraySize, enum PRINTFORMAT Sende
 
 float getBMSTemperatue()
 {
-    float retval; 
-	if(sig_caught == true)
+    /*This condition can be replaced by user stop command too, realised for test purpose */
+	if (TestPrintCount[TEMPERATURE] >= MAX_PRINT[TEMPERATURE]) 
 	{
-		retval  = EOF;
+		TestInputValue[TEMPERATURE]  = EOF;
 	}
 	else
 	{
-	    retval  = RandomFloatGeneratorWithinRange(TEMP_MIN, TEMP_MAX);
+	    TestInputValue[TEMPERATURE]  = RandomFloatGeneratorWithinRange(TEMP_MIN, TEMP_MAX);
 	}
-
-    return retval ;
+	
+   
+    return TestInputValue[TEMPERATURE] ;
 }
 
 /****************************************************************************************
@@ -47,18 +49,16 @@ float getBMSTemperatue()
 float getBMSChargeRate()
 {
 
-    float retval;
-  
-    if(sig_caught == true)
+    if (TestPrintCount[CHARGERATE] >= MAX_PRINT[CHARGERATE])
 	{
-		retval = EOF;
+		TestInputValue[CHARGERATE] = EOF;
 	}
 	else
 	{
-	    retval  = RandomFloatGeneratorWithinRange(CHRGRATE_MIN, CHRGRATE_MAX) ;
+	    TestInputValue[CHARGERATE]  = RandomFloatGeneratorWithinRange(CHRGRATE_MIN, CHRGRATE_MAX) ;
 	}
 	
-    return retval ;
+    return TestInputValue[CHARGERATE] ;
 }
 
 /****************************************************************************************

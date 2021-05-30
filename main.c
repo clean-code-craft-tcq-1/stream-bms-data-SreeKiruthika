@@ -7,58 +7,30 @@ Write your code in this editor and press "Run" button to compile and execute it.
 *******************************************************************************/
 
 #include <stdio.h>
-#include "test_mocks.h"
-
 #include <signal.h> 
 #include <stdbool.h> 
+
+#include "bms.h"
+
+bool sig_caught= false; 
  
-float TestInputValue[NUMOFPARAM] = {0,0};
-float TestOutputValue[NUMOFPARAM] = {0,0};
-int MAX_PRINT[NUMOFPARAM] = {0,0};
-int TestPrintCount[NUMOFPARAM] = {0,0};
-
-void ResetPrintCount()
-{
-    TestPrintCount[TEMPERATURE] = 0;
-    TestPrintCount[CHARGERATE] = 0;
-}
-
-void TC_AssignMaxPrint(int Temp,int ChargeRate)
-{
-    MAX_PRINT[TEMPERATURE] = Temp;
-    MAX_PRINT[CHARGERATE] = ChargeRate;
-    ResetPrintCount(); /*to reset print count between the test cases*/
-    BMSDataToConsoleSender();
-    assert(TestPrintCount[TEMPERATURE] == Temp);
-    assert(TestPrintCount[CHARGERATE] == ChargeRate);
- //   printf("\n%d,%d",TestPrintCount[TEMPERATURE],TestPrintCount[CHARGERATE]); for debugging
-     /*validatePrintedOutput() does validations parallely on each printed output*/
-}
-
-
+void signal_handler(int sig) 
+{ 
+  if (sig == SIGINT)
+  { 
+    sig_caught=true; 
+  } 
+} 
+ 
 int main()
 {
-    /*Print both param 5 entries*/
-    TC_AssignMaxPrint(5,5);
-   
-    /*Print both param 15 entries*/
-    TC_AssignMaxPrint(15,15);
-   
-   /*Print both param NULL entries*/
-    TC_AssignMaxPrint(0,0);
-       
-    /*Different number of param - temp 9 , ChargeRate 3*/
-    TC_AssignMaxPrint(9,3);
+    if (signal(SIGINT, signal_handler) == SIG_ERR) 
+    { 
+    fprintf(stderr, "signal func registration failed\n"); 
+    return 1; 
+    }
     
-     /*Different number of param - temp 7 , ChargeRate 10*/
-    TC_AssignMaxPrint(7,10);
-    
-    
-    /*Different number of Only temp, no ChargeRate enteries*/
-    TC_AssignMaxPrint(17,0);
-    
-     /*Different number of Only  ChargeRate, no temp enteries*/
-    TC_AssignMaxPrint(0,6);
+    BMSDataToConsoleSender();
     
     return 0;
 }
