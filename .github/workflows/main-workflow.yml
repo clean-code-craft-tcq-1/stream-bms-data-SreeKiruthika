@@ -30,7 +30,7 @@ jobs:
         retention-days: 1
     
     - name: build for production
-      run: g++ -Wall -Wextra -o production ./main.c ./BMS/bms_sender.c ./BMS/bmsdata_func.c 
+      run: g++ -Wall -Wextra -o production ./main.c ./bms_sender.c ./bmsdata_func.c 
       
     - name: production code run
       run: ./production 
