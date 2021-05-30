@@ -1,4 +1,5 @@
 #include "test_mocks.h"
+#include <math.h>
 
 /****************************************************************************************
 *Func desc : This function is to print the BMS data to console and to store the printed data for test purpose - stub
@@ -8,9 +9,12 @@
 void WriteFormatted ( const char * format, ... )
 {
   va_list args;
- 
+	
   va_start (args, format);
   vprintf (format, args);
+  va_end (args);
+	
+  va_start (args, format);
   TestOutputValue[TEMPERATURE] = va_arg(args, double);
   TestOutputValue[CHARGERATE]  = va_arg(args, double);
   va_end (args);
@@ -30,11 +34,11 @@ void validatePrintedOutput()
 	{
 		if (TestInputValue[i] == EOF ) 
 		{
-			assert((int)TestOutputValue[i]  == 0);
+			assert((int)TestOutputValue[i]  == EOF);
 		}
 		else
 		{
-			assert((TestOutputValue[i] - TestInputValue[i]) <0.01);
+			assert(fabs(TestOutputValue[i] - TestInputValue[i]) < 0.01);
 			TestPrintCount[i]++;
 		}
 	}
