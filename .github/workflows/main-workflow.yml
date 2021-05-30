@@ -32,5 +32,4 @@ jobs:
     - name: build for production
       run: g++ -Wall -Wextra -o production ./main.c ./bms_sender.c ./bmsdata_func.c 
       
-    - name: production code run
-      run: ./production 
+ 
