@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class BmsReceiver {
-	
+
 	public static void main(String[] args) {
 		System.out.println("----- Reading input from sender started -------");
 		HashMap<String, List<Double>> paramMap = new HashMap<>();
@@ -26,21 +26,21 @@ public class BmsReceiver {
 				if ((line = reader.readLine()) != null && !line.equals("-1.00;-1.00")) {
 					System.out.print("\r");
 					String[] param = line.split(";");
-					//to add newly read paramter into the list
+					// to add newly read paramter into the list
 					for (int i = 0; i < param.length; i++) {
 						paramMap.get(parametersList.get(i)).add(Double.parseDouble(param[i]));
 					}
-					//sending each parameter to determine some data like max, min etc.
+					// sending each parameter to determine some data like max, min etc.
 					paramMap.forEach((paramName, valueList) -> {
 						try {
 							getMaxAndMinValueOfIncomingParameters(paramName, valueList);
 							getSmaOfParamValues(paramName, valueList);
-						} catch (NoDataReceivedException e) {System.err.println(e);
+						} catch (NoDataReceivedException e) {
+							System.err.println(e);
 						}
-						
+
 					});
-				}
-				else{
+				} else {
 					break;
 				}
 				Thread.sleep(500);
@@ -50,26 +50,30 @@ public class BmsReceiver {
 		}
 	}
 
-	
 	/**
-	 * to get maximum and minimum values among all the parameter values read till now
+	 * to get maximum and minimum values among all the parameter values read till
+	 * now
+	 * 
 	 * @param paramName
 	 * @param paramValueList
-	 * @throws NoDataReceivedException 
+	 * @throws NoDataReceivedException
 	 */
-	public static void getMaxAndMinValueOfIncomingParameters(String paramName, List<Double> paramValueList) throws NoDataReceivedException {
+	public static void getMaxAndMinValueOfIncomingParameters(String paramName, List<Double> paramValueList)
+			throws NoDataReceivedException {
 		try {
-		Double maxVal = paramValueList.stream().sorted().collect(Collectors.toList()).get(paramValueList.size() - 1);
-		Double minVal = paramValueList.stream().sorted().collect(Collectors.toList()).get(0);
-		printMaxAndMinValueOfIncomingParameters(paramName, maxVal, minVal);
-		}
-		catch(ArrayIndexOutOfBoundsException | NullPointerException e) {
+			Double maxVal = paramValueList.stream().sorted().collect(Collectors.toList())
+					.get(paramValueList.size() - 1);
+			Double minVal = paramValueList.stream().sorted().collect(Collectors.toList()).get(0);
+			printMaxAndMinValueOfIncomingParameters(paramName, maxVal, minVal);
+		} catch (ArrayIndexOutOfBoundsException | NullPointerException e) {
 			throw new NoDataReceivedException();
 		}
 	}
 
 	/**
-	 * to print the maximum and minimum values among all the parameter values read till now, on the console
+	 * to print the maximum and minimum values among all the parameter values read
+	 * till now, on the console
+	 * 
 	 * @param paramName
 	 * @param maxVal
 	 * @param minVal
@@ -78,14 +82,16 @@ public class BmsReceiver {
 		System.out.print(paramName + " : Max, Min = " + String.format("%.2f", maxVal) + ","
 				+ String.format("%.2f", minVal) + "\t");
 	}
- 
+
 	/**
 	 * to get simple moving average of last five values of parameters
+	 * 
 	 * @param paramName
 	 * @param paramValueList
-	 * @throws NoDataReceivedException 
+	 * @throws NoDataReceivedException
 	 */
-	public static void getSmaOfParamValues(String paramName, List<Double> paramValueList) throws NoDataReceivedException {
+	public static void getSmaOfParamValues(String paramName, List<Double> paramValueList)
+			throws NoDataReceivedException {
 		try {
 			List<Double> paramSubList = paramValueList.subList(paramValueList.size() - 5, paramValueList.size() - 1);
 			Double sma;
@@ -96,14 +102,15 @@ public class BmsReceiver {
 			printSmaOfParamValues(paramName, sma);
 		} catch (IndexOutOfBoundsException e) {
 			// exception will occur if list length is less than 5
-		}
-		catch(NullPointerException e) {
+		} catch (NullPointerException e) {
 			throw new NoDataReceivedException();
 		}
 	}
 
 	/**
-	 * to print the simple moving average of last 5 parameter values read till now, on the console
+	 * to print the simple moving average of last 5 parameter values read till now,
+	 * on the console
+	 * 
 	 * @param paramName
 	 * @param sma
 	 */
