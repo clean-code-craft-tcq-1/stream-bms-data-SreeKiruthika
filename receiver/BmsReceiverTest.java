@@ -26,7 +26,7 @@ public class BmsReceiverTest {
 		Double[] valueArray = {};
 		List<Double> valueList = Arrays.asList(valueArray);
 		// then
-		BmsReceiver.getMaxAndMinValueOfIncomingParameters(paramName, valueList);
+		BmsReceiverTask.getMaxAndMinValueOfIncomingParameters(paramName, valueList);
 	}
 
 	@Test
@@ -36,7 +36,7 @@ public class BmsReceiverTest {
 		Double[] valueArray = { 23.67, 34.78, 10.67, 90.34, 90.43 };
 		List<Double> valueList = Arrays.asList(valueArray);
 		// then
-		BmsReceiver.getMaxAndMinValueOfIncomingParameters(paramName, valueList);
+		BmsReceiverTask.getMaxAndMinValueOfIncomingParameters(paramName, valueList);
 		// verify
 		assertTrue(outputStreamCaptor.toString().trim().equals("SOC : Max, Min = 90.43,10.67"));
 	}
@@ -44,7 +44,7 @@ public class BmsReceiverTest {
 	@Test(expected = NoDataReceivedException.class)
 	public void givenNullValuePassedWhenGetMaxMin_thenOutPutIsPrintedOnConsole() throws NoDataReceivedException {
 		// then
-		BmsReceiver.getMaxAndMinValueOfIncomingParameters(null, null);
+		BmsReceiverTask.getMaxAndMinValueOfIncomingParameters(null, null);
 	}
 
 	@Test
@@ -54,7 +54,7 @@ public class BmsReceiverTest {
 		Double[] valueArray = {};
 		List<Double> valueList = Arrays.asList(valueArray);
 		// then
-		BmsReceiver.getSmaOfParamValues(paramName, valueList);
+		BmsReceiverTask.getSmaOfParamValues(paramName, valueList);
 		assertTrue(outputStreamCaptor.toString().trim().equals(""));
 	}
 
@@ -65,7 +65,7 @@ public class BmsReceiverTest {
 		Double[] valueArray = { 23.67, 34.78, 10.67, 90.34, 90.43, 89.80, 23.89 };
 		List<Double> valueList = Arrays.asList(valueArray);
 		// then
-		BmsReceiver.getSmaOfParamValues(paramName, valueList);
+		BmsReceiverTask.getSmaOfParamValues(paramName, valueList);
 		// verify
 		assertTrue(outputStreamCaptor.toString().trim().equals("Simple moving average of SOC = 56.25"));
 	}
@@ -73,13 +73,13 @@ public class BmsReceiverTest {
 	@Test(expected = NoDataReceivedException.class)
 	public void givenNullValuePassedWhenGetSma_thenOutPutIsPrintedOnConsole() throws NoDataReceivedException {
 		// then
-		BmsReceiver.getSmaOfParamValues(null, null);
+		BmsReceiverTask.getSmaOfParamValues(null, null);
 	}
 
 	@Test
 	public void givenNullValuePassedWhenPrintSma_thenOutPutIsPrintedOnConsole() throws NoDataReceivedException {
 		// then
-		BmsReceiver.printSmaOfParamValues(null, null);
+		BmsReceiverTask.printSmaOfParamValues(null, null);
 		// verify
 		assertTrue(outputStreamCaptor.toString().trim().equals("Simple moving average of null = nu"));
 	}
