@@ -1,6 +1,7 @@
 package receiver;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,42 +18,59 @@ public class BmsReceiver {
 			String line = null;
 			// to create the list of parameter names coming from sender
 			List<String> parametersList = Arrays.asList(reader.readLine().split(";"));
-			
 			paramMap = prepareParamMap(parametersList);
-			while (true) {
-				if ((line = reader.readLine()) != null && !line.equals("-1.00;-1.00")) {
-					System.out.print("\r");
-					String[] param = line.split(";");
-					// to add newly read paramter into the list
-					for (int i = 0; i < param.length; i++) {
-						paramMap.get(parametersList.get(i)).add(Double.parseDouble(param[i]));
-					}
-					performOperationsOnParamMap(paramMap);
-				} else {
-					break;
-				}
-				Thread.sleep(500);
-			}
+			readAndPrintDataFromSender(reader, parametersList, paramMap);
 		} catch (Exception e) {
 			System.err.println(e);
 		}
 	}
 
 	/*
-	 * to add entries in map that will contain parameter name as key and it's values list as value
+	 * to add entries in map that will contain parameter name as key and it's values
+	 * list as value
+	 * 
 	 * @param parametersList
+	 * 
 	 * @return
 	 */
 	private static HashMap<String, List<Double>> prepareParamMap(List<String> parametersList) {
 		HashMap<String, List<Double>> paramMap = new HashMap<>();
-					parametersList.forEach(param -> {
-						paramMap.put(param, new ArrayList<>());
-					});
+		parametersList.forEach(param -> {
+			paramMap.put(param, new ArrayList<>());
+		});
 		return paramMap;
 	}
-	
+
+	/**
+	 * @param reader
+	 * @param parametersList
+	 * @param paramMap
+	 * @throws NumberFormatException
+	 * @throws IOException
+	 * @throws InterruptedException
+	 */
+	private static void readAndPrintDataFromSender(BufferedReader reader, List<String> parametersList,
+			HashMap<String, List<Double>> paramMap) throws NumberFormatException, IOException, InterruptedException {
+		String line = null;
+		while (true) {
+			if ((line = reader.readLine()) != null && !line.equals("-1.00;-1.00")) {
+				System.out.print("\r");
+				String[] param = line.split(";");
+				// to add newly read paramter into the list
+				for (int i = 0; i < param.length; i++) {
+					paramMap.get(parametersList.get(i)).add(Double.parseDouble(param[i]));
+				}
+				performOperationsOnParamMap(paramMap);
+			} else {
+				break;
+			}
+			Thread.sleep(500);
+		}
+	}
+
 	/**
 	 * sending each parameter to determine some data like max, min etc.
+	 * 
 	 * @param paramMap
 	 */
 	private static void performOperationsOnParamMap(HashMap<String, List<Double>> paramMap) {
@@ -110,8 +128,9 @@ public class BmsReceiver {
 	public static void getSmaOfParamValues(String paramName, List<Double> paramValueList)
 			throws NoDataReceivedException {
 		try {
-			Double sma  = paramValueList.subList(paramValueList.size() - 5, paramValueList.size() - 1).stream().mapToDouble(i -> i).average().orElse(0);
-		    printSmaOfParamValues(paramName, sma);
+			Double sma = paramValueList.subList(paramValueList.size() - 5, paramValueList.size() - 1).stream()
+					.mapToDouble(i -> i).average().orElse(0);
+			printSmaOfParamValues(paramName, sma);
 		} catch (IndexOutOfBoundsException e) {
 			// exception will occur if list length is less than 5
 		} catch (NullPointerException e) {
