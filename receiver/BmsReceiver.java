@@ -17,11 +17,8 @@ public class BmsReceiver {
 			String line = null;
 			// to create the list of parameter names coming from sender
 			List<String> parametersList = Arrays.asList(reader.readLine().split(";"));
-			// to add entries in map that will contain parameter name as key and it's
-			// values list as value
-			parametersList.forEach(param -> {
-				paramMap.put(param, new ArrayList<>());
-			});
+			
+			paramMap = prepareParamMap(parametersList);
 			while (true) {
 				if ((line = reader.readLine()) != null && !line.equals("-1.00;-1.00")) {
 					System.out.print("\r");
@@ -30,16 +27,7 @@ public class BmsReceiver {
 					for (int i = 0; i < param.length; i++) {
 						paramMap.get(parametersList.get(i)).add(Double.parseDouble(param[i]));
 					}
-					// sending each parameter to determine some data like max, min etc.
-					paramMap.forEach((paramName, valueList) -> {
-						try {
-							getMaxAndMinValueOfIncomingParameters(paramName, valueList);
-							getSmaOfParamValues(paramName, valueList);
-						} catch (NoDataReceivedException e) {
-							System.err.println(e);
-						}
-
-					});
+					performOperationsOnParamMap(paramMap);
 				} else {
 					break;
 				}
@@ -48,6 +36,35 @@ public class BmsReceiver {
 		} catch (Exception e) {
 			System.err.println(e);
 		}
+	}
+
+	/*
+	 * to add entries in map that will contain parameter name as key and it's values list as value
+	 * @param parametersList
+	 * @return
+	 */
+	private static HashMap<String, List<Double>> prepareParamMap(List<String> parametersList) {
+		HashMap<String, List<Double>> paramMap = new HashMap<>();
+					parametersList.forEach(param -> {
+						paramMap.put(param, new ArrayList<>());
+					});
+		return paramMap;
+	}
+	
+	/**
+	 * sending each parameter to determine some data like max, min etc.
+	 * @param paramMap
+	 */
+	private static void performOperationsOnParamMap(HashMap<String, List<Double>> paramMap) {
+		paramMap.forEach((paramName, valueList) -> {
+			try {
+				getMaxAndMinValueOfIncomingParameters(paramName, valueList);
+				getSmaOfParamValues(paramName, valueList);
+			} catch (NoDataReceivedException e) {
+				System.err.println(e);
+			}
+
+		});
 	}
 
 	/**
@@ -93,13 +110,8 @@ public class BmsReceiver {
 	public static void getSmaOfParamValues(String paramName, List<Double> paramValueList)
 			throws NoDataReceivedException {
 		try {
-			List<Double> paramSubList = paramValueList.subList(paramValueList.size() - 5, paramValueList.size() - 1);
-			Double sma;
-			Double sum = 0.0;
-			for (double param : paramSubList)
-				sum = sum + param;
-			sma = sum / 5;
-			printSmaOfParamValues(paramName, sma);
+			Double sma  = paramValueList.subList(paramValueList.size() - 5, paramValueList.size() - 1).stream().mapToDouble(i -> i).average().orElse(0);
+		    printSmaOfParamValues(paramName, sma);
 		} catch (IndexOutOfBoundsException e) {
 			// exception will occur if list length is less than 5
 		} catch (NullPointerException e) {
