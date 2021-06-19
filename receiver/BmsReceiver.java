@@ -23,7 +23,7 @@ public class BmsReceiver {
 				paramMap.put(param, new ArrayList<>());
 			});
 			while (true) {
-				if ((line = reader.readLine()) != null) {
+				if ((line = reader.readLine()) != null && !line.equals("-1.00;-1.00")) {
 					System.out.print("\r");
 					String[] param = line.split(";");
 					//to add newly read paramter into the list
@@ -39,6 +39,9 @@ public class BmsReceiver {
 						}
 						
 					});
+				}
+				else{
+					break;
 				}
 				Thread.sleep(500);
 			}

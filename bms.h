@@ -35,6 +35,8 @@ extern enum PRINTFORMAT SenderPrintFormat ;
 
 extern bool sig_caught ;
 
+extern int maxCount ;
+
 struct BatteryParam_s
 {
     char ParamName[20];
