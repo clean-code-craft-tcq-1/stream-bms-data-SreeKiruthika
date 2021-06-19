@@ -1,4 +1,4 @@
-name: No Duplications
+name: No Duplication beyond 2 lines
 
 on: [push, pull_request]
 
@@ -13,5 +13,5 @@ jobs:
     - name: Install jscpd
       run: sudo npm install -g jscpd
 
-    - name: No Duplication beyond 3 lines
-      run: jscpd . --min-lines 3 --min-tokens 48 --threshold 0
+    - name: Check duplications
+      run: jscpd . --min-lines 2 --min-tokens 40 --threshold 0

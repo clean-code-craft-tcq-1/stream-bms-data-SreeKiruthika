@@ -25,7 +25,7 @@ extern float TestInputValue[NUMOFPARAM];
 extern float TestOutputValue[NUMOFPARAM];
 extern int MAX_PRINT[NUMOFPARAM];
 extern int TestPrintCount[NUMOFPARAM];
-
+extern int maxCount;
 /**************************************************************/
 
 /**************Function prototype section**********************/

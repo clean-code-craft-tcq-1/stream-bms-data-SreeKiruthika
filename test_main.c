@@ -16,7 +16,7 @@ float TestInputValue[NUMOFPARAM] = {0,0};
 float TestOutputValue[NUMOFPARAM] = {0,0};
 int MAX_PRINT[NUMOFPARAM] = {0,0};
 int TestPrintCount[NUMOFPARAM] = {0,0};
-
+int maxCount = 0;
 void ResetPrintCount()
 {
     TestPrintCount[TEMPERATURE] = 0;

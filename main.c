@@ -13,6 +13,8 @@ Write your code in this editor and press "Run" button to compile and execute it.
 #include "bms.h"
 
 bool sig_caught= false; 
+
+int maxCount = 0;
  
 void signal_handler(int sig) 
 { 
@@ -22,14 +24,18 @@ void signal_handler(int sig)
   } 
 } 
  
-int main()
+int main(int argc,char* argv[])
 {
     if (signal(SIGINT, signal_handler) == SIG_ERR) 
     { 
     fprintf(stderr, "signal func registration failed\n"); 
     return 1; 
     }
-    
+    if(argc == 2)
+    {
+        
+            maxCount = strtol(argv[1], NULL, 10);
+    }
     BMSDataToConsoleSender();
     
     return 0;
