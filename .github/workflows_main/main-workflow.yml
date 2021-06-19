@@ -1,4 +1,4 @@
-name: Build and Run
+name: Build and Run with pipe command
 
 on: [push, pull_request]
 
@@ -10,9 +10,9 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: build for production
-      run: g++ -Wall -Wextra -o production ./main.c ./bms_sender.c ./bmsdata_func.c 
+    - name: build for production-pipe
+      run: g++ -Wall -Wextra -o result ./main.c ./bms_sender.c ./bmsdata_func.c 
       
     - name: run
-      run: ./production 20
+      run: ./result 20
  
