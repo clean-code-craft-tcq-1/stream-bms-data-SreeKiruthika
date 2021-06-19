@@ -1,4 +1,4 @@
-name: Check Completeness - receiver
+name: Check Completeness - sender
 
 on: [push, pull_request]
 
@@ -11,4 +11,4 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: all entries made
-      run: bash ./.github/workflows_receiver/check-complete.sh
+      run: bash ./.github/workflows/check-complete-sender.sh
