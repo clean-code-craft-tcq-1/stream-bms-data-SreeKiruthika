@@ -15,11 +15,10 @@ public class BmsReceiver {
 		System.out.println("----- Reading input from sender started -------");
 		HashMap<String, List<Double>> paramMap = new HashMap<>();
 		try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
-			String line = null;
 			// to create the list of parameter names coming from sender
 			List<String> parametersList = Arrays.asList(reader.readLine().split(";"));
 			paramMap = prepareParamMap(parametersList);
-			readAndPrintDataFromSender(reader, parametersList, paramMap);
+			readAndPerformOpronDataFromSender(reader, parametersList, paramMap);
 		} catch (Exception e) {
 			System.err.println(e);
 		}
@@ -49,22 +48,26 @@ public class BmsReceiver {
 	 * @throws IOException
 	 * @throws InterruptedException
 	 */
-	private static void readAndPrintDataFromSender(BufferedReader reader, List<String> parametersList,
+	private static void readAndPerformOpronDataFromSender(BufferedReader reader, List<String> parametersList,
 			HashMap<String, List<Double>> paramMap) throws NumberFormatException, IOException, InterruptedException {
 		String line = null;
 		while (true) {
 			if ((line = reader.readLine()) != null && !line.equals("-1.00;-1.00")) {
 				System.out.print("\r");
-				String[] param = line.split(";");
-				// to add newly read paramter into the list
-				for (int i = 0; i < param.length; i++) {
-					paramMap.get(parametersList.get(i)).add(Double.parseDouble(param[i]));
-				}
+				fillParamMapListWithSenderData(parametersList,paramMap,line);
 				performOperationsOnParamMap(paramMap);
 			} else {
 				break;
 			}
 			Thread.sleep(500);
+		}
+	}
+	
+	private static void fillParamMapListWithSenderData(List<String> parametersList, HashMap<String, List<Double>> paramMap, String line) {
+		String[] param = line.split(";");
+		// to add newly read paramter into the list
+		for (int i = 0; i < param.length; i++) {
+			paramMap.get(parametersList.get(i)).add(Double.parseDouble(param[i]));
 		}
 	}
 
