@@ -1,4 +1,4 @@
-name: Check Completeness
+name: Check Completeness - sender
 
 on: [push, pull_request]
 

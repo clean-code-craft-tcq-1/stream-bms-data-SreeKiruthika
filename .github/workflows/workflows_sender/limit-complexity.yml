@@ -1,4 +1,4 @@
-name: Limit complexity
+name: Limit complexity - sender
 
 on: [push, pull_request]
 
