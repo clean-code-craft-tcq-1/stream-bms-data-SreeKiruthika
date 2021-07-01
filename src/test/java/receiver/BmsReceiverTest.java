@@ -10,6 +10,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import main.java.receiver.BmsReceiverTask;
+import main.java.receiver.NoDataReceivedException;
 public class BmsReceiverTest {
 
 	private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
