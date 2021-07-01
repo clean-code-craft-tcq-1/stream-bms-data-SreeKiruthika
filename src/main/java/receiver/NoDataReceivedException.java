@@ -1,4 +1,4 @@
-package receiver;
+package main.java.receiver;
 
 public class NoDataReceivedException extends Exception {
 

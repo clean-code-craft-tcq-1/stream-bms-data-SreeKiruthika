@@ -1,4 +1,4 @@
-package receiver;
+package main.java.receiver;
 
 import java.util.HashMap;
 import java.util.List;
