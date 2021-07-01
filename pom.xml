@@ -28,27 +28,7 @@
   </dependencies>
 
   <build>
-    <plugins>
-      <plugin>
-        <groupId>org.jacoco</groupId>
-        <artifactId>jacoco-maven-plugin</artifactId>
-        <version>0.8.2</version>
-        <executions>
-            <execution>
-              <goals>
-                    <goal>prepare-agent</goal>
-                </goals>
-            </execution>
-            <execution>
-                <id>report</id>
-                <phase>prepare-package</phase>
-              <goals>
-                    <goal>report</goal>
-                </goals>
-            </execution>
-        </executions>
-      </plugin>
-    </plugins>
+    
     <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
       <plugins>
         <!-- clean lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#clean_Lifecycle -->
@@ -65,9 +45,31 @@
           <artifactId>maven-compiler-plugin</artifactId>
           <version>3.8.0</version>
         </plugin>
+         <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>build-helper-maven-plugin</artifactId>
+            <version>1.8</version>
+            <executions>
+                <execution>
+                    <id>add-test-source</id>
+                    <phase>generate-sources</phase>
+                    <goals>
+                        <goal>add-test-source</goal>
+                    </goals>
+                    <configuration>
+                        <sources>
+                            <source>receiver</source>
+                        </sources>
+                    </configuration>
+                </execution>
+            </executions>
+        </plugin>
         <plugin>
           <artifactId>maven-surefire-plugin</artifactId>
           <version>2.22.1</version>
+           <configuration>
+                <testSourceDirectory>receiver</testSourceDirectory>
+            </configuration>
         </plugin>
         <plugin>
           <artifactId>maven-jar-plugin</artifactId>
@@ -92,6 +94,27 @@
         </plugin>
       </plugins>
     </pluginManagement>
+    <plugins>
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>0.8.2</version>
+        <executions>
+            <execution>
+              <goals>
+                    <goal>prepare-agent</goal>
+                </goals>
+            </execution>
+            <execution>
+                <id>report</id>
+                <phase>prepare-package</phase>
+              <goals>
+                    <goal>report</goal>
+                </goals>
+            </execution>
+        </executions>
+      </plugin>
+    </plugins>
   </build>
   <reporting>
   <plugins>

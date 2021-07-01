@@ -1,4 +1,4 @@
-package receiver;
+package main.java.receiver;
 
 import java.util.HashMap;
 import java.util.List;
@@ -65,7 +65,7 @@ public class BmsReceiverTask {
 	public static void getSmaOfParamValues(String paramName, List<Double> paramValueList)
 			throws NoDataReceivedException {
 		try {
-			Double sma = paramValueList.subList(paramValueList.size() - 5, paramValueList.size() - 1).stream()
+			Double sma = paramValueList.subList(paramValueList.size() - 5, paramValueList.size()).stream()
 					.mapToDouble(i -> i).average().orElse(0);
 			printSmaOfParamValues(paramName, sma);
 		} catch (IndexOutOfBoundsException e) {

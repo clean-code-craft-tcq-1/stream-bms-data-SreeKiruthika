@@ -23,7 +23,7 @@ jobs:
       with:
         java-version: 1.8
     - name: Build and Generate coverage
-      run: mvn test jacoco:report
+      run: mvn -DtestSourceDirectory=receiver test jacoco:report
     - name: Upload coverage
       uses: actions/upload-artifact@v2
       with:

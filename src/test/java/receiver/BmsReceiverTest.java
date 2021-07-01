@@ -9,7 +9,8 @@ import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
-
+import main.java.receiver.BmsReceiverTask;
+import main.java.receiver.NoDataReceivedException;
 public class BmsReceiverTest {
 
 	private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
@@ -67,7 +68,7 @@ public class BmsReceiverTest {
 		// then
 		BmsReceiverTask.getSmaOfParamValues(paramName, valueList);
 		// verify
-		assertTrue(outputStreamCaptor.toString().trim().equals("Simple moving average of SOC = 56.25"));
+		assertTrue(outputStreamCaptor.toString().trim().equals("Simple moving average of SOC = 61.03"));
 	}
 
 	@Test(expected = NoDataReceivedException.class)

@@ -18,7 +18,7 @@ jobs:
       with:
         java-version: 1.8
     - name: Build Receiver for prod
-      run: javac receiver/BmsReceiver.java
+      run: javac src/main/java/receiver/BmsReceiver.java src/main/java/receiver/BmsReceiverTask.java src/main/java/receiver/NoDataReceivedException.java
     - name: run
-      run: ./result 20 | java -ea -classpath . receiver.BmsReceiver
+      run: ./result 20 | java -ea -cp "src" main.java.receiver.BmsReceiver
  
