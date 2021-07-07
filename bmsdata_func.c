@@ -23,8 +23,9 @@ void printToConsole(float * BMSDataArray , int arraySize, enum PRINTFORMAT Sende
 
 float getBMSTemperatue()
 {
+    static int i=0;
     float retval; 
-	if(sig_caught == true)
+	if((sig_caught == true)||(i > maxCount ))
 	{
 		retval  = EOF;
 	}
@@ -32,6 +33,7 @@ float getBMSTemperatue()
 	{
 	    retval  = RandomFloatGeneratorWithinRange(TEMP_MIN, TEMP_MAX);
 	}
+	i++;
 
     return retval ;
 }
@@ -46,10 +48,10 @@ float getBMSTemperatue()
 
 float getBMSChargeRate()
 {
-
+    static int i=0;
     float retval;
   
-    if(sig_caught == true)
+    if((sig_caught == true)||(i > maxCount ))
 	{
 		retval = EOF;
 	}
@@ -57,7 +59,8 @@ float getBMSChargeRate()
 	{
 	    retval  = RandomFloatGeneratorWithinRange(CHRGRATE_MIN, CHRGRATE_MAX) ;
 	}
-	
+	i++;
+
     return retval ;
 }
 
