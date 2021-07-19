@@ -20,7 +20,7 @@ public class BmsReceiver {
 			List<String> parametersList = Arrays.asList(reader.readLine().split(";"));
 			paramMap = prepareParamMap(parametersList);
 			readAndPerformOpronDataFromSender(reader, parametersList, paramMap);
-		} catch (Exception e) {
+		} catch (IOException e) {
 			System.err.println(e);
 		}
 	}
